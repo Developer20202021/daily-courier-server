@@ -73,21 +73,21 @@ const storage = multer.diskStorage({
 
 
 
-servicesRouter.post('/post-service', upload.single("file"), async (req, res)=>{
+servicesRouter.post('/post-service', async (req, res)=>{
 
 
-    const domainName = 'http://localhost:5000/images/'; 
+//     const domainName = 'http://localhost:5000/images/'; 
 
-    const fileName = req.file.filename
-    console.log(fileName);
+//     const fileName = req.file.filename
+//     console.log(fileName);
 
-   const addEventInfo = req.body;
-   addEventInfo.imgUrl = `${domainName}${fileName}`;
+//    const addEventInfo = req.body;
+//    addEventInfo.imgUrl = `${domainName}${fileName}`;
 
 console.log(req.body);
 
 
-const insertService = await AddServiceModel(addEventInfo)
+const insertService = await AddServiceModel(req.body)
 insertService.save(err=>{
     if (err) {
         console.log(err);

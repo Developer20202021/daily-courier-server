@@ -41,7 +41,6 @@ app.use(express.urlencoded({extended: true }))
 
 const port = process.env.PORT || 5000;
 
-const filePathid = ''
 
 
 app.use('/services',servicesRouter);
@@ -55,25 +54,25 @@ res.send('Hello thank you')
 
 
 
-app.get('/images/:id',  (req, res)=>{
-    const imageFile= req.params.id;
+// app.get('/images/:id',  (req, res)=>{
+//     const imageFile= req.params.id;
   
 
 
-fs.readFile(`C:/projects/daily-courier/daily-courier-server/publicaccess/${imageFile}`, (err, data)=>{
+// fs.readFile(`C:/projects/daily-courier/daily-courier-server/publicaccess/${imageFile}`, (err, data)=>{
   
 
-    if (err) {
-        console.log(err);
-    }
+//     if (err) {
+//         console.log(err);
+//     }
  
-        res.end(data);
+//         res.end(data);
   
 
-})
+// })
 
 
-})
+// })
 
 
 
