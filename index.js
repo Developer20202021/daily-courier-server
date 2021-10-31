@@ -48,7 +48,7 @@ app.use('/services',servicesRouter);
 app.use('/client/delivery',deliveryInfoRouter);
 
 app.get('/',(req,res)=>{
-
+res.send('Hello thank you')
 })
 
 
