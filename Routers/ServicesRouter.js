@@ -1,23 +1,115 @@
 const express = require('express');
 const fakeData = require('../data ');
+const fs = require('fs');
+
+const multer = require('multer');
 const AddServiceModel = require('../Models/AddServiceModel');
+const path = require('path');
 
 const servicesRouter = express.Router();
 
 
 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, path.join(__dirname, '../publicaccess'))
+    },
+    filename: function(req, file, callb){
+        const fakeFileName = file.originalname;
+        const extntion = path.extname(fakeFileName);
 
 
-servicesRouter.post('/post-service',async (req, res)=>{
+    
+            const realFile = fakeFileName.split('.'&&' ');
+            console.log(realFile);
+            const date = Date.now();
+            const getRealFile = realFile[0].toLocaleLowerCase()+'-'+date+extntion;
+            callb(null, getRealFile);
+       
+       
+
+    }
+
+})
+
+
+// upload file
+
+
+    const upload = multer({
+        storage:storage,
+       
+        fileFilter: (req, file, cb)=>{
+      
+                if (file.mimetype == 'image/jpeg' || file.mimetype =='image/jpg' || file.mimetype=='image/png' || file.mimetype == 'image/svg') {
+                    cb(null, true)
+                }
+                else{
+                    return cb(null, false);
+                    
+                 }
+                
+          
+        }
+
+    
+        
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+servicesRouter.post('/post-service', upload.single("file"), async (req, res)=>{
+
+
+    const domainName = 'http://localhost:5000/images/'; 
+
+    const fileName = req.file.filename
+    console.log(fileName);
+
+   const addEventInfo = req.body;
+   addEventInfo.imgUrl = `${domainName}${fileName}`;
 
 console.log(req.body);
 
 
-const insertService = await AddServiceModel.insertMany(fakeData)
-console.log(insertService);
+const insertService = await AddServiceModel(addEventInfo)
+insertService.save(err=>{
+    if (err) {
+        console.log(err);
+    }
+    else{
+        console.log(insertService);
+    }
+})
+
+
+
+
+
+
+
+
+
 
 
 })
+
+
 
 
 

@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+
+const path = require('path');
+const fs = require('fs');
 const servicesRouter = require('./Routers/ServicesRouter');
 const deliveryInfoRouter = require('./Routers/deliveryInfoRouter');
 dotenv.config();
@@ -38,13 +41,37 @@ app.use(express.urlencoded({extended: true }))
 
 const port = process.env.PORT || 5000;
 
-
+const filePathid = ''
 
 
 app.use('/services',servicesRouter);
 app.use('/client/delivery',deliveryInfoRouter);
 
 app.get('/',(req,res)=>{
+
+})
+
+
+
+
+
+app.get('/images/:id',  (req, res)=>{
+    const imageFile= req.params.id;
+  
+
+
+fs.readFile(`C:/projects/daily-courier/daily-courier-server/publicaccess/${imageFile}`, (err, data)=>{
+  
+
+    if (err) {
+        console.log(err);
+    }
+ 
+        res.end(data);
+  
+
+})
+
 
 })
 
